@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/akhilsharma90/file-encrypt/filecrypt"
+	"github.com/Shajal-Kumar/GoCryptor/gocryptor"
 
-	"golang.org/x/crypto/ssh/terminal"
+	"golang.org/x/term"
 )
 
 func main() {
@@ -73,9 +73,9 @@ func encryptHandle() {
 
 func getPassword() []byte {
 	fmt.Print("Enter Password: ")
-	password, _ := terminal.ReadPassword(0)
+	password, _ := term.ReadPassword(0)
 	fmt.Print("\nConfirm Password: ")
-	password2, _ := terminal.ReadPassword(0)
+	password2, _ := term.ReadPassword(0)
 	if !validatePassword(password, password2) {
 		fmt.Print("\nPasswords do not match. Please try again.\n")
 		return getPassword()
@@ -97,7 +97,7 @@ func decryptHandle() {
 	}
 
 	fmt.Print("Enter Password: ")
-	password, _ := terminal.ReadPassword(0)
+	password, _ := term.ReadPassword(0)
 
 	fmt.Println("\nDecrypting...")
 	filecrypt.Decrypt(file, password)
@@ -106,11 +106,7 @@ func decryptHandle() {
 }
 
 func validatePassword(password1 []byte, password2 []byte) bool {
-	if !bytes.Equal(password1, password2) {
-		return false
-	}
-
-	return true
+	return bytes.Equal(password1, password2)
 }
 
 func validateFile(file string) bool {
